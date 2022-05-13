@@ -37,6 +37,7 @@ const EventPage: NextPage = () => {
     }
   );
   // console.log(data, error);
+
   return (
     <div>
       <h1>{dateStr}</h1>
