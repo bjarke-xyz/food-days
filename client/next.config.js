@@ -3,17 +3,11 @@ const {
   PHASE_PRODUCTION_BUILD,
 } = require("next/constants");
 
-// /** @type {import('next').NextConfig} */
-// const nextConfig = {
-//   reactStrictMode: true,
-//   env: {
-//     API_URL: "http://localhost:3000",
-//   },
-// };
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // Kept around for auto complete type helping
+};
 
-// module.exports = nextConfig;
-
-// /** @type {import('next').NextConfig} */
 module.exports = (phase) => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
   const env = {
@@ -24,5 +18,9 @@ module.exports = (phase) => {
   return {
     reactStrictMode: true,
     env,
+    images: {
+      loader: "imgix",
+      path: "https://noop/",
+    },
   };
 };
