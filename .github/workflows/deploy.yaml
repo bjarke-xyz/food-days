@@ -18,6 +18,7 @@ jobs:
           filters: |
             api:
               - "food-days-api/**"
+              - ".github/**"
       - uses: actions/setup-node@v2
         if: steps.filter.outputs.api == 'true'
         with:
