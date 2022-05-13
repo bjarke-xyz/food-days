@@ -13,6 +13,7 @@ const {
 
 // module.exports = nextConfig;
 
+// /** @type {import('next').NextConfig} */
 module.exports = (phase) => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
   const env = {
