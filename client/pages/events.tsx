@@ -31,7 +31,10 @@ const EventPage: NextPage = () => {
   // const dateStr = router.query["d"] ?? format(new Date(), "MM-dd");
   const { data, error } = useSWR<DayEvent[]>(
     `${process.env.API_URL}/events?d=${dateStr}`,
-    fetcher
+    fetcher,
+    {
+      refreshInterval: 0,
+    }
   );
   // console.log(data, error);
   return (
