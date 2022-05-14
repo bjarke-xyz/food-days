@@ -1,6 +1,7 @@
 import { DayEvent, SourceType } from "./models";
 import { load } from "cheerio";
 import { parse, parseISO } from "date-fns";
+import { orderBy } from "lodash";
 
 type ParseFunction = (html: string) => DayEvent[];
 
@@ -44,8 +45,7 @@ function parseWikipedia(html: string): DayEvent[] {
     });
   });
 
-  console.log(events.length);
-  return events;
+  return orderBy(events, (x) => x.date);
 }
 
 export const parsers: Record<SourceType, ParseFunction> = {

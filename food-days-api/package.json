@@ -1,40 +1,21 @@
 {
   "name": "food-days-api",
-  "version": "0.1.0",
-  "bin": {
-    "food-days-api": "bin/food-days-api.js"
-  },
-  "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
-    "test": "jest",
-    "cdk": "cdk",
-    "trigger-fetch-event": "sam local generate-event cloudwatch scheduled-event | sam local invoke -t ./cdk.out/FoodDaysApiStack.template.json --env-vars env.json -e - fetch-data-handler",
-    "trigger-parse-event": "sam local generate-event s3 put --key=sourcedata/wikipedia | sam local invoke -t ./cdk.out/FoodDaysApiStack.template.json --env-vars env.json -e - parse-data-handler",
-    "start-api": "cdk synth && sam local start-api -t ./cdk.out/FoodDaysApiStack.template.json --env-vars env.json --warm-containers lazy",
-    "localstack-start": "SERVICES=s3,dynamodb localstack start -d",
-    "localstack-stop": "localstack stop"
-  },
+  "version": "0.0.0",
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.97",
-    "@types/jest": "^27.5.0",
-    "@types/lodash": "^4.14.182",
-    "@types/node": "10.17.27",
-    "aws-cdk": "2.24.0",
-    "aws-sdk": "^2.1134.0",
-    "jest": "^27.5.1",
-    "ts-jest": "^27.1.4",
-    "ts-node": "^10.7.0",
-    "typescript": "~3.9.7"
+    "@cloudflare/workers-types": "^3.10.0",
+    "typescript": "^4.6.4",
+    "wrangler": "0.0.0-9906e1c"
+  },
+  "private": true,
+  "scripts": {
+    "start": "wrangler dev",
+    "publish": "wrangler publish"
   },
   "dependencies": {
-    "aws-cdk-lib": "2.24.0",
+    "@types/lodash": "^4.14.182",
     "cheerio": "^1.0.0-rc.10",
-    "constructs": "^10.0.0",
     "date-fns": "^2.28.0",
-    "lodash": "^4.17.21",
-    "nanoid": "^3.3.4",
-    "node-fetch": "^3.2.4",
-    "source-map-support": "^0.5.21"
+    "itty-router": "^2.6.1",
+    "lodash": "^4.17.21"
   }
 }
