@@ -1,31 +1,17 @@
-import { differenceInDays, setYear, parseISO, format } from "date-fns";
-import { orderBy, sortBy } from "lodash";
+import { format, setYear } from "date-fns";
 import { useEffect, useState } from "react";
 import { DayEvent } from "../lib/models";
 
-interface EventsViewerProps {
+interface EventWrapperProps {
   events: DayEvent[];
   date: Date;
 }
-export const EventsViewer: React.FC<EventsViewerProps> = ({ events, date }) => {
-  const eventsSorted = orderBy(
-    events,
-    (event) => {
-      const eventDate1970 = parseISO(event.date);
-      const eventDateThisYear = setYear(eventDate1970, date.getFullYear());
-      const dayDiff = Math.abs(differenceInDays(date, eventDateThisYear));
-      return dayDiff;
-    },
-    "asc"
-  );
-  const nearestEvent = eventsSorted[0];
-  // console.log(nearestEvent, date, eventsSorted);
+export const EventWrapper: React.FC<EventWrapperProps> = ({ events, date }) => {
   return (
     <div>
-      <Event date={date} event={nearestEvent} />
-      {/* {eventsSorted.map((e) => (
-        <Event key={e.event} event={e} />
-      ))} */}
+      {events.map((event) => (
+        <Event key={event.event} date={date} event={event} />
+      ))}
     </div>
   );
 };
@@ -60,13 +46,13 @@ export const Event: React.FC<EventProps> = ({ event, date }) => {
     }
   }
 
-  let eventDate = parseISO(event.date);
+  let eventDate = event.date;
   eventDate = setYear(eventDate, date.getFullYear());
 
   return (
     <div>
       <div className="text-3xl">{event.event}</div>
-      <time>{format(eventDate, "E dd MMM")}</time>
+      <time>{format(eventDate, "E d MMM")}</time>
       <p>{event.details}</p>
       {imageUrl && <img onError={imageUrlFallback} src={imageUrl}></img>}
     </div>

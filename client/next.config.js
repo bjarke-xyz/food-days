@@ -12,7 +12,7 @@ module.exports = (phase) => {
   const isDev = phase === PHASE_DEVELOPMENT_SERVER;
   const env = {
     API_URL: isDev
-      ? "http://localhost:3000"
+      ? "http://localhost:8787"
       : "https://food-days-api.bjarke.xyz",
   };
   return {

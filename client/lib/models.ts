@@ -1,5 +1,5 @@
 export interface DayEvent {
-  date: string;
+  date: Date;
   event: string;
   details?: string;
   imageUrl?: string;
