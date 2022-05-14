@@ -30,7 +30,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CF_WORKER_TOKEN }}
           environment: 'production'
-          command: publish
+          command: 'publish src/index.ts'
           workingDirectory: 'food-days-api'
         env:
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
