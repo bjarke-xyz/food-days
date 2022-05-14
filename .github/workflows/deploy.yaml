@@ -23,6 +23,12 @@ jobs:
             api:
               - "food-days-api/**"
               - ".github/**"
+      - uses: actions/setup-node@v2
+        if: steps.filter.outputs.api == 'true'
+        with:
+          node-version: 16
+      - run: npm install
+        if: steps.filter.outputs.api == 'true'
       - uses: cloudflare/wrangler-action@2.0.0
         name: Publish
         id: publish
@@ -33,8 +39,8 @@ jobs:
           command: 'publish src/index.ts'
           workingDirectory: 'food-days-api'
         env:
-          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
       - name: Notify on error
         uses: Ilshidur/action-discord@0.3.2
         if: steps.filter.outputs.api == 'true' && failure() && steps.publish.outcome == 'failure'
