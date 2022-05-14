@@ -28,7 +28,7 @@ const Home: NextPage = () => {
   }, [router.query]);
 
   const { data, error, isValidating } = useSWR<DayEvent[]>(
-    `${process.env.API_URL}/events?d=${date.getMonth() + 1}-01`,
+    `${process.env.API_URL}/events`,
     fetcher,
     {
       revalidateOnFocus: false,
