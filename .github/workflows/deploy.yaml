@@ -23,7 +23,7 @@ jobs:
             api:
               - "food-days-api/**"
               - ".github/**"
-      - uses: cloudflare/wrangler-action@1.3.0
+      - uses: cloudflare/wrangler-action@2.0.0
         name: Publish
         id: publish
         if: steps.filter.outputs.api == 'true'
