@@ -19,9 +19,9 @@ router.get("/events", (req: IttyRequest, env, context) =>
   getEvents(req, context, new EventsRepository(env))
 );
 
-router.post("/events", (req: IttyRequest, env) =>
-  updateEvents(req, new EventsRepository(env))
-);
+// router.post("/events", (req: IttyRequest, env) =>
+//   updateEvents(req, new EventsRepository(env))
+// );
 
 router.all("*", () => new Response("Not found", { status: 404 }));
 export default {
