@@ -14,35 +14,41 @@ function parseWikipedia(html: string): DayEvent[] {
     if (country === "Global or International") {
       country = "International";
     }
-    const table = ch.parent().next("table");
-    table.find("tr").each((rowIndex, rowElem) => {
-      const tds = $(rowElem).find("td").toArray();
-      // console.log(country, tds.length);
-      const dateStr = $(tds[0]).text().trim();
-      // TODO: Extract wikipedia link from tds[1] to find image if missing from image column
-      const event = $(tds[1]).text().trim();
-      const origin = $(tds[2]).text().trim();
-      const notes = $(tds[3]).text();
-      const imageUrl = $(tds[4]).find("img")?.attr("src")?.trim();
-      let date = parse(dateStr, "MMMM d", new Date(0));
-      if (isNaN(date as any)) {
-        date = new Date(0);
-      }
-      let details = "";
-      if (origin) {
-        details = `Origin: ${origin}`;
-      }
-      if (event) {
-        // console.log(dateStr, date);
-        events.push({
-          date,
-          event,
-          details,
-          imageUrl,
-          country,
-        });
-      }
-    });
+    let tables = ch.parent().nextAll("table").toArray();
+    if (country !== "United States") {
+      tables = [tables[0]];
+    }
+    for (const tableElem of tables) {
+      const table = $(tableElem);
+      table.find("tr").each((rowIndex, rowElem) => {
+        const tds = $(rowElem).find("td").toArray();
+        // console.log(country, tds.length);
+        const dateStr = $(tds[0]).text().trim();
+        // TODO: Extract wikipedia link from tds[1] to find image if missing from image column
+        const event = $(tds[1]).text().trim();
+        const origin = $(tds[2]).text().trim();
+        const notes = $(tds[3]).text();
+        const imageUrl = $(tds[4]).find("img")?.attr("src")?.trim();
+        let date = parse(dateStr, "MMMM d", new Date(0));
+        if (isNaN(date as any)) {
+          date = new Date(0);
+        }
+        let details = "";
+        if (origin) {
+          details = `Origin: ${origin}`;
+        }
+        if (event) {
+          // console.log(dateStr, date);
+          events.push({
+            date,
+            event,
+            details,
+            imageUrl,
+            country,
+          });
+        }
+      });
+    }
   });
 
   return orderBy(events, (x) => x.date);

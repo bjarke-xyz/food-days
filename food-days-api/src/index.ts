@@ -9,7 +9,7 @@
  */
 
 import { Router } from "itty-router";
-import { getEvents } from "./handlers/events";
+import { getEvents, updateEvents } from "./handlers/events";
 import { EventsRepository } from "./lib/events-repository";
 import { IttyRequest } from "./types";
 
@@ -19,9 +19,9 @@ router.get("/events", (req: IttyRequest, env, context) =>
   getEvents(req, context, new EventsRepository(env))
 );
 
-// router.post("/events", (req: IttyRequest, env) =>
-//   updateEvents(req, new EventsRepository(env))
-// );
+router.post("/events", (req: IttyRequest, env) =>
+  updateEvents(req, new EventsRepository(env))
+);
 
 router.all("*", () => new Response("Not found", { status: 404 }));
 export default {

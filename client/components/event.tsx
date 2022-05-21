@@ -10,7 +10,9 @@ export const EventWrapper: React.FC<EventWrapperProps> = ({ events, date }) => {
   return (
     <div>
       {events.map((event) => (
-        <Event key={event.event} date={date} event={event} />
+        <div className="mb-5" key={event.event}>
+          <Event date={date} event={event} />
+        </div>
       ))}
     </div>
   );
@@ -52,7 +54,7 @@ export const Event: React.FC<EventProps> = ({ event, date }) => {
   return (
     <div>
       <div className="text-3xl">{event.event}</div>
-      <time>{format(eventDate, "E d MMM")}</time>
+      {/* <time>{format(eventDate, "E d MMM")}</time> */}
       <p>{event.details}</p>
       {imageUrl && <img onError={imageUrlFallback} src={imageUrl}></img>}
     </div>
