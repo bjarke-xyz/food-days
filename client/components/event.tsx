@@ -53,7 +53,9 @@ export const Event: React.FC<EventProps> = ({ event, date }) => {
 
   return (
     <div>
-      <div className="text-3xl">{event.event}</div>
+      <div className="text-3xl">
+        {event.event} <span className="text-base">({event.country})</span>
+      </div>
       {/* <time>{format(eventDate, "E d MMM")}</time> */}
       <p>{event.details}</p>
       {imageUrl && <img onError={imageUrlFallback} src={imageUrl}></img>}
