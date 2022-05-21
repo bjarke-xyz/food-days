@@ -1,3 +1,4 @@
+import { parseISO } from "date-fns";
 import { WorkerEnv } from "../types";
 import { DayEvent, SourceType } from "./models";
 
@@ -9,7 +10,11 @@ export class EventsRepository {
   async getEvents(): Promise<DayEvent[]> {
     const eventsStr = await this.env.FOOD_DAYS.get("wikipedia" as SourceType);
     if (eventsStr) {
-      return JSON.parse(eventsStr);
+      const parsed: DayEvent[] = JSON.parse(eventsStr);
+      return parsed.map((x) => ({
+        ...x,
+        date: parseISO(x.date as any as string),
+      }));
     }
     return [];
   }

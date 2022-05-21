@@ -1,3 +1,4 @@
+import { parseISO } from "date-fns";
 import { EventsRepository } from "../lib/events-repository";
 import { parsers } from "../lib/parsers";
 import { IttyRequest } from "../types";
@@ -12,9 +13,7 @@ export async function getEvents(
   const cache = caches.default;
 
   let response = await cache.match(cacheKey);
-  let cacheHit = true;
   if (!response) {
-    cacheHit = false;
     // Not in cache, fetch from origin
     let events = await eventsRepository.getEvents();
     if (events.length === 0) {
@@ -22,6 +21,16 @@ export async function getEvents(
       events = await eventsRepository.getEvents();
     }
     if (events) {
+      const todayOnly = request.query?.["today"] === "true";
+      if (todayOnly) {
+        const today = new Date();
+        events = events.filter((x) => {
+          return (
+            x.date.getMonth() === today.getMonth() &&
+            x.date.getDate() === today.getDate()
+          );
+        });
+      }
       response = new Response(JSON.stringify(events), {
         headers: { "Content-Type": "application/json" },
       });
